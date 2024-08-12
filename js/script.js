@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
         },
     ];
 
-    console.log(window.location.href.split('/')[window.location.href.split('/').length - 1])
+    console.log(window.location.href.split('/'))
 
     if (window.location.href.split('/')[window.location.href.split('/').length - 1] === '') {
 
