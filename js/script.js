@@ -33,6 +33,8 @@ window.addEventListener('DOMContentLoaded', () => {
         },
     ];
 
+    console.log(window.location.href.split('/')[window.location.href.split('/').length - 1])
+
     if (window.location.href.split('/')[window.location.href.split('/').length - 1] === '') {
 
         // set last data
