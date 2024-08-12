@@ -45,20 +45,22 @@ window.addEventListener('DOMContentLoaded', () => {
         const label = document.querySelector('.info__label');
         const descr = document.querySelector('.info__descr');
 
-        title.textContent = lastObj['name'];
-        title.setAttribute('data-i', localStorage.getItem('index'));
-        inputVal.value = localStorage.getItem('inputValue');
-        label.textContent = lastObj['keyItem'] !== 'Води' ? `${lastObj['keyItem']} в кг:` : 'Води в л'; 
-        descr.textContent = lastObj['descr'];
-
-        lastObj['ingred'].forEach(item => {
-                const arrOfIng = item.split(' ');
-                const itemToList = document.createElement('li');
-                itemToList.classList.add('info__item');
-                itemToList.innerHTML = `<li class='info__item'><span>${arrOfIng[0]}</span> ${arrOfIng[1]}</li>`
-
-                listWrapper.append(itemToList);
-        });
+        if (lastObj) {
+            title.textContent = lastObj['name'];
+            title.setAttribute('data-i', localStorage.getItem('index'));
+            inputVal.value = localStorage.getItem('inputValue');
+            label.textContent = lastObj['keyItem'] !== 'Води' ? `${lastObj['keyItem']} в кг:` : 'Води в л'; 
+            descr.textContent = lastObj['descr'];
+    
+            lastObj['ingred'].forEach(item => {
+                    const arrOfIng = item.split(' ');
+                    const itemToList = document.createElement('li');
+                    itemToList.classList.add('info__item');
+                    itemToList.innerHTML = `<li class='info__item'><span>${arrOfIng[0]}</span> ${arrOfIng[1]}</li>`
+    
+                    listWrapper.append(itemToList);
+            });
+        }
 
         const listOfVal = [];
 
