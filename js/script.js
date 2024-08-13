@@ -29,7 +29,28 @@ window.addEventListener('DOMContentLoaded', () => {
             ingred: ['соль: 2с', 'сацебели: 485г', 'сахар: 18с', 'масло(растительное): 200г', 'уксус: 200г', 'честнок: 2г', 'перец(черный-молотый): 1ч', 'перец(красный-молотый): 1ч'],
             value: 5000,
             keyItem: 'Кабачки молодые',
-            descr: 'Кабачки молодые порезать ??? по 2 ???. Тушить 30 минут с момента закипания. Разложить по банкам. Выход 6 литровых банок.'
+            descr: 'Кабачки молодые порезать кружочками по 2 см. Тушить 30 минут с момента закипания. Разложить по банкам. Выход 6 литровых банок.'
+        },
+        {
+            name: 'Огурцы с соусом чили',
+            ingred: ['кетчуп: 150г', 'соль: 2с', 'сахар: 2с', 'уксус: 15г', 'вода: 1000г'],
+            value: 1000,
+            keyItem: 'Вода',
+            descr: '2 литра вода это 2 банки по 1 л + 1 б. 1.5 л на нее 1 упаковка соуса та 380 г'
+        },
+        {
+            name: 'Майонез домашний (Юля маникюр)',
+            ingred: ['горчица: 2ч', 'сахар: 0.6с', 'соль: 0.3с'],
+            value: 2000,
+            keyItem: 'Яйца',
+            descr: 'Все взбить блендером 1 минуту. 1 стакан подсолнечного масла влить тонкой струйкой. Взбить 3 минуты. 2 ст ложки яблочного или винаградного сока. Взбить 1 минуту'
+        },
+        {
+            name: 'Кабачки консервированые (Вася Носенко)',
+            ingred: ['соль: 3с', 'сахар: 10с', 'уксус: 250г', 'вода: 2000г'],
+            value: 3000,
+            keyItem: 'Кабачки',
+            descr: 'Все взбить блендером 1 минуту. 1 стакан подсолнечного масла влить тонкой струйкой. Взбить 3 минуты. 2 ст ложки яблочного или винаградного сока. Взбить 1 минуту'
         },
     ];
 
@@ -49,7 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
             title.textContent = lastObj['name'];
             title.setAttribute('data-i', localStorage.getItem('index'));
             inputVal.value = localStorage.getItem('inputValue');
-            label.textContent = lastObj['keyItem'] !== 'Води' ? `${lastObj['keyItem']} в кг:` : 'Води в л'; 
+            label.textContent = lastObj['keyItem'] === 'Яйца' ? 'Яйцв в шт.' : lastObj['keyItem'] !== 'Води' ? `${lastObj['keyItem']} в кг:` : 'Води в л'; 
             descr.textContent = lastObj['descr'];
     
             lastObj['ingred'].forEach(item => {
@@ -81,7 +102,7 @@ window.addEventListener('DOMContentLoaded', () => {
             listOfIngredToChange.forEach((item, i) => {
                 const splitedText = item.textContent.split(' ');
 
-                splitedText[1] = splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(красный-молотый):' ? `${tmp[i]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'соль:' ? `${tmp[i]}c` : tmp[i] >= 1000 ? `${tmp[i] / 1000}кг` : `${tmp[i]}г`;
+                splitedText[1] = splitedText[0] === 'Горчица' || splitedText[0] === 'горчица:' ||  splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(красный-молотый):' ? `${tmp[i]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'соль:' ? `${tmp[i]}c` : tmp[i] >= 1000 ? `${tmp[i] / 1000}кг` : `${tmp[i]}г`;
 
                 item.innerHTML = `<span>${splitedText[0]}</span> ${splitedText[1]}`
             })
@@ -117,7 +138,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-        
 
         // Render ingred
 
@@ -133,7 +153,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 nameOfRec.textContent = target.textContent;
                 nameOfRec.setAttribute('data-i', item.getAttribute('data-i'));
 
-                label.textContent = listIngred[nameOfRec.getAttribute('data-i')]['keyItem'] !== 'Води' ? `${listIngred[nameOfRec.getAttribute('data-i')]['keyItem']} в кг:` : 'Води в л'; 
+                label.textContent = listIngred[nameOfRec.getAttribute('data-i')]['keyItem'] === 'Яйца' ? 'Яйцв в шт.' : listIngred[nameOfRec.getAttribute('data-i')]['keyItem'] !== 'Води' ? `${listIngred[nameOfRec.getAttribute('data-i')]['keyItem']} в кг:` : 'Води в л'; 
 
                 inputVal.value = listIngred[nameOfRec.getAttribute('data-i')]['value'] / 1000;
                 localStorage.setItem('last', JSON.stringify(listIngred[nameOfRec.getAttribute('data-i')]))
@@ -156,6 +176,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         // Count value
 
+        const btnsList = document.querySelectorAll('.info__btn');
         const inputOfVal = document.querySelector('.info__input');
 
         inputOfVal.addEventListener('input', e => {
@@ -181,12 +202,43 @@ window.addEventListener('DOMContentLoaded', () => {
             listOfIngredToChange.forEach((item, i) => {
                 const splitedText = item.textContent.split(' ');
 
-                splitedText[1] = splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(красный-молотый):' ? `${tmp[i]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'соль:' ? `${tmp[i]}c` : tmp[i] >= 1000 ? `${tmp[i] / 1000}кг` : `${tmp[i]}г`;
+                splitedText[1] = splitedText[0] === 'Горчица' || splitedText[0] === 'горчица:' ||  splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(красный-молотый):' ? `${tmp[i]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'соль:' ? `${tmp[i]}c` : tmp[i] >= 1000 ? `${tmp[i] / 1000}кг` : `${tmp[i]}г`;
 
                 item.innerHTML = `<span>${splitedText[0]}</span> ${splitedText[1]}`
-            })
+            });
+        });
 
-        })
+        btnsList.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                inputOfVal.value = +e.target.textContent + +inputOfVal.value;
+
+                const listOfVal = [];
+    
+                localStorage.setItem('inputValue', inputOfVal.value);
+    
+                for (let i = 0; i < listOfIngred.children.length; i++) {
+                    listOfVal.push(listIngred[nameOfRec.getAttribute('data-i')]['ingred'][i].split(' ')[1].slice(0, -1))
+                }
+    
+                let tmp = [];
+    
+                listOfVal.forEach(item => {
+                    let n = item / listIngred[nameOfRec.getAttribute('data-i')]['value'] * 1000;
+    
+                    tmp.push((n * +inputOfVal.value).toFixed(2));
+                });
+    
+                const listOfIngredToChange = [...listOfIngred.children];
+    
+                listOfIngredToChange.forEach((item, i) => {
+                    const splitedText = item.textContent.split(' ');
+    
+                    splitedText[1] = splitedText[0] === 'Горчица' || splitedText[0] === 'горчица:' ||  splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(красный-молотый):' ? `${tmp[i]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'соль:' ? `${tmp[i]}c` : tmp[i] >= 1000 ? `${tmp[i] / 1000}кг` : `${tmp[i]}г`;
+    
+                    item.innerHTML = `<span>${splitedText[0]}</span> ${splitedText[1]}`
+                });
+            });
+        });
 
     } else {
 
@@ -212,7 +264,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 const itemToAdd = document.createElement('li');
                 itemToAdd.classList.add('add__item');
-                splitedText[1] = splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(черный-молотый)' || splitedText[0] === 'перец(красный-молотый):' || splitedText[0] === 'перец(красный-молотый)' ? `${splitedText[1]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'соль:' ||  splitedText[0] === 'соль' || splitedText[0] === 'сахар' ? `${splitedText[1]}c` : splitedText[1] >= 1000 ? `${splitedText[1] / 1000}кг` : `${splitedText[1]}г`;
+                splitedText[1] = splitedText[0] === 'Горчица' || splitedText[0] === 'горчица:' ||  splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(черный-молотый)' || splitedText[0] === 'перец(красный-молотый):' || splitedText[0] === 'перец(красный-молотый)' ? `${splitedText[1]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'соль:' ||  splitedText[0] === 'соль' || splitedText[0] === 'сахар' ? `${splitedText[1]}c` : splitedText[1] >= 1000 ? `${splitedText[1] / 1000}кг` : `${splitedText[1]}г`;
                 itemToAdd.textContent = `${splitedText[0]}: ${splitedText[1]}`;
                 itemToAdd.setAttribute('data-val', splitedText[1]);
 
@@ -263,13 +315,46 @@ window.addEventListener('DOMContentLoaded', () => {
                 listOfIngredToChange.forEach((item, i) => {
                     const splitedText = item.textContent.split(' ');
     
-                    splitedText[1] = splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(черный-молотый)' || splitedText[0] === 'перец(красный-молотый):' || splitedText[0] === 'перец(красный-молотый)' ? `${tmp[i]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'сахар' || splitedText[0] === 'соль:' || splitedText[0] === 'соль' ? `${tmp[i]}c` : tmp[i] >= 1000 ? `${tmp[i] / 1000}кг` : `${tmp[i]}г`;
+                    splitedText[1] = splitedText[0] === 'Горчица' || splitedText[0] === 'горчица:' ||  splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(черный-молотый)' || splitedText[0] === 'перец(красный-молотый):' || splitedText[0] === 'перец(красный-молотый)' ? `${tmp[i]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'сахар' || splitedText[0] === 'соль:' || splitedText[0] === 'соль' ? `${tmp[i]}c` : tmp[i] >= 1000 ? `${tmp[i] / 1000}кг` : `${tmp[i]}г`;
 
                     item.innerHTML = `<span>${splitedText[0]}</span> ${splitedText[1]}`
                 });
 
             };
         });
+
+        const btnsList = document.querySelectorAll('.add__btn');
+
+        btnsList.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                inputFirst.value = +e.target.textContent + +inputFirst.value;
+
+                const listOfVal = [];
+                const children = [...listOfAddedIngred.children]
+    
+                for (let i = 0; i < listOfAddedIngred.children.length; i++) {
+                    listOfVal.push(+children[i].getAttribute('data-val'));
+                }
+    
+                let tmp = [];
+    
+                listOfVal.forEach(item => {
+                    let n = item / +firstVal.value;
+
+                    tmp.push((n * +inputFirst.value).toFixed(2));
+                });
+    
+                const listOfIngredToChange = [...listOfIngred.children];
+    
+                listOfIngredToChange.forEach((item, i) => {
+                    const splitedText = item.textContent.split(' ');
+    
+                    splitedText[1] = splitedText[0] === 'Горчица' || splitedText[0] === 'горчица:' ||  splitedText[0] === 'перец(черный-молотый):' || splitedText[0] === 'перец(черный-молотый)' || splitedText[0] === 'перец(красный-молотый):' || splitedText[0] === 'перец(красный-молотый)' ? `${tmp[i]}ч` : splitedText[0] === 'сахар:' || splitedText[0] === 'сахар' || splitedText[0] === 'соль:' || splitedText[0] === 'соль' ? `${tmp[i]}c` : tmp[i] >= 1000 ? `${tmp[i] / 1000}кг` : `${tmp[i]}г`;
+
+                    item.innerHTML = `<span>${splitedText[0]}</span> ${splitedText[1]}`
+                });
+            })
+        })
     }
 
 });
